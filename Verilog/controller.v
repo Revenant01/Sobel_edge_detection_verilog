@@ -1,6 +1,7 @@
 module controller #(
     parameter data_size = 24,
     parameter window_count = 9,
+    parameter window_size = 9,
     parameter conv_out_data_size = 29,
     parameter sqrt_in_data_size = 60,
     parameter sqrt_out_data_size = 30
@@ -36,7 +37,7 @@ module controller #(
 
   // File handling
   integer input_file, output_file;
-  reg [data_size-1:0] buffer[0:window_count - 1];  // 3x3 sliding window buffer
+  reg [data_size-1:0] buffer[0:window_size - 1];  // 3x3 sliding window buffer
   integer window_index = 0, delayed_window_index = 0;
 
   integer i_window = 0;
@@ -63,7 +64,7 @@ module controller #(
       case (state)
 
         IDLE: begin
-          input_file  <= $fopen("binary_input.txt", "r");
+          input_file  <= $fopen("output_pixels.txt", "r");
           output_file <= $fopen("binary_output.txt", "w");
           if (input_file && output_file) begin
             state <= READ;
@@ -73,7 +74,7 @@ module controller #(
         READ: begin
           valid_data <= 0;
           if (!$feof(input_file)) begin
-            for (i_window = 0; i_window < window_count; i_window = i_window + 1) begin
+            for (i_window = 0; i_window < window_size; i_window = i_window + 1) begin
               $fscanf(input_file, "%b\n", buffer[i_window]);
             end
           end
@@ -122,8 +123,9 @@ module controller #(
         end
 
         MAG: begin
+          //Threshold = rounded_division(sum, window_count);
           Threshold = sum / window_count;
-          thrs[delayed_window_index] <= (sq[delayed_window_index] > Threshold) ? 1 : 0;
+          thrs[delayed_window_index] <= (sq[delayed_window_index] > Threshold) ? 24'h000000 : 24'hffffff;
 
           if (window_index == window_count) begin
             window_index <= 0;
@@ -137,7 +139,8 @@ module controller #(
         end
 
         WRTE: begin
-          $fwrite(output_file, "%024b\n", thrs[delayed_window_index]);  // Write each value in the array to the file
+          $fwrite(output_file, "%024b\n",
+                  thrs[delayed_window_index]);  // Write each value in the array to the file
           if (window_index == window_count) begin
             window_index <= 0;
             delayed_window_index <= 0;
@@ -173,6 +176,14 @@ module controller #(
     end
   endfunction
 
-
+  function integer rounded_division;
+    input [sqrt_out_data_size+window_count-1:0] numerator;  // Replace with your required size
+    input integer denominator;
+    integer temp;
+    begin
+      temp = numerator + (denominator >> 1);  // Add half of denominator
+      rounded_division = temp / denominator;  // Perform division
+    end
+  endfunction
 
 endmodule

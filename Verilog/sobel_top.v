@@ -1,7 +1,8 @@
 module sobel_top #(
     parameter data_size = 24,  // Pixel data size (RGB)
-    parameter window_count = 9,
-    parameter conv_out_data_size = 29,
+    parameter window_count = 9, // chnages based on photo size
+    localparam window_size = 9, // This one must not be changed
+    parameter conv_out_data_size = 29, //Fixed
     parameter sqrt_in_data_size = 60, // The sum of squares of two 29-bit numbers requires 60 bits to represent the result: (value1^2 + value2^2)
     parameter sqrt_out_data_size = sqrt_in_data_size / 2
 ) (
@@ -33,6 +34,7 @@ module sobel_top #(
   controller #(
       .data_size(data_size),
       .window_count(window_count),
+      .window_size(window_size),
       .conv_out_data_size(conv_out_data_size),
       .sqrt_in_data_size(sqrt_in_data_size),
       .sqrt_out_data_size(sqrt_out_data_size)
@@ -102,6 +104,5 @@ module sobel_top #(
       .num(sqrt_num_w),  // Input number
       .sqr(sqrt_sq_w)    // Output square root
   );
-
 
 endmodule

@@ -16,11 +16,12 @@ module sobel_matrix_conv #(
 
   reg signed [conv_out_data_size-1:0] sum; 
 
+  // reg [11:0] lum_p1a, lum_p1b,lum_p2,lum_m1a,lum_m1b,lum_m2; 
+
   always @(posedge clk) begin
     conv_ready <= 0;
     if (valid_data) begin 
       sum = in_p1a + (in_p2 << 1) + in_p1b - in_m1a - (in_m2 << 1) - in_m1b;
-      // data_out <= abs_value(sum);
       data_out <= sum;
       conv_ready <= 1;
     end else begin 

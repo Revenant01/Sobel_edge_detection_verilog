@@ -32,4 +32,4 @@ def to_binary_with_sliding_window(image_path, output_file_path):
                         f.write(binary_pixel + '\n')
 
 # Example usage
-to_binary_with_sliding_window('test2.png','output_pixels.txt')
+to_binary_with_sliding_window('test.png','output_pixels.txt')

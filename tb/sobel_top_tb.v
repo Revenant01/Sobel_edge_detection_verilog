@@ -8,7 +8,7 @@ module sobel_top_tb;
   // Instantiate the sobel_top module
   sobel_top #(
     .data_size(24),  // Set the data_size parameter
-    .conv_out_data_size(29)
+    .window_count(49729)
   ) uut (
     .clk(clk),
     .reset(reset),
@@ -31,7 +31,8 @@ module sobel_top_tb;
     #2 
     reset = 0; // Deassert reset after two clock cycles
 
-    #600  
+
+    wait (done);
     $stop;
   end
 
