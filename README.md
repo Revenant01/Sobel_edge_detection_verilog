@@ -26,7 +26,7 @@ This project implements the Sobel edge detection algorithm in Verilog for image 
 
 ## Project Overview
 
-This project provides an opportunity to implement and simulate a hardware-based edge detection solution. It involves using the Sobel operator to process grayscale images and generate an edge map, highlighting transitions in pixel intensity.
+This project provides an opportunity to implement and simulate a hardware-based edge detection solution. It involves using the Sobel operator to process images and generate an edge map, highlighting transitions in pixel intensity.
 
 ---
 
@@ -78,7 +78,7 @@ The project involves designing Verilog modules to compute these convolutions and
 
 ## Modules Documentation
 
-The project consists of two main Verilog modules:
+The project consists of two main Verilog modules along with other sub-modules:
 
 1. [sobel_top.v](sobel_top.md):
  - Integrates the Sobel operator and handles input/output.
