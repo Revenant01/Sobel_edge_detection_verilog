@@ -13,14 +13,7 @@ This project implements the Sobel edge detection algorithm in Verilog for image 
 - [Project Description](#project-description)
 - [Implementation Steps](#implementation-steps)
 - [Modules Documentation](#modules-documentation)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Evaluation Criteria](#evaluation-criteria)
-- [References](#references)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+
 
 ---
 
@@ -89,10 +82,5 @@ The project consists of two main Verilog modules along with other sub-modules:
 
 ---
 
-## Installation
-
-1. Clone the repository:
- ```bash
- git clone https://github.com/username/sobel_edge_detection.git
 
 
